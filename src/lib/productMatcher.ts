@@ -29,10 +29,9 @@ export function findBestMatches(
     const satDiff = Math.abs(colorData.saturation - product.saturation);
     const lightDiff = Math.abs(colorData.lightness - product.lightness);
 
-    // Para tonos claros/rubios la luminosidad es crítica
-    const isBlonde = colorData.lightness > 55;
-    const hueWeight = isBlonde ? 0.25 : 0.35;
-    const satWeight = isBlonde ? 0.15 : 0.25;
+    const isBlonde = colorData.lightness > 65;
+    const hueWeight = isBlonde ? 0.15 : 0.35; // Menos peso al tono
+    const satWeight = isBlonde ? 0.25 : 0.25;
     const lightWeight = isBlonde ? 0.6 : 0.4;
 
     const normalizedHueDiff = hueDiff / 180;
