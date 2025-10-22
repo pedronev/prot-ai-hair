@@ -1,0 +1,222 @@
+[
+  {
+    "id": "60",
+    "name": "Rubio Claro",
+    "code": "#60",
+    "image": "/products/60.png",
+    "colorHex": "#d0bba1",
+    "hue": 32,
+    "saturation": 33,
+    "lightness": 72
+  },
+  {
+    "id": "01",
+    "name": "Negro Intenso (Negro Ébano)",
+    "code": "#01",
+    "image": "/products/01.png",
+    "colorHex": "#999695",
+    "hue": 22,
+    "saturation": 1,
+    "lightness": 59
+  },
+  {
+    "id": "613",
+    "name": "Rubio Platino",
+    "code": "#613",
+    "image": "/products/613.png",
+    "colorHex": "#dacab4",
+    "hue": 34,
+    "saturation": 33,
+    "lightness": 78
+  },
+  {
+    "id": "18",
+    "name": "Negro Natural (Negro Seda)",
+    "code": "#1B",
+    "image": "/products/18.png",
+    "colorHex": "#868281",
+    "hue": 17,
+    "saturation": 2,
+    "lightness": 51
+  },
+  {
+    "id": "02",
+    "name": "Marrón oscuro (Castaño Expresso)",
+    "code": "#02",
+    "image": "/products/02.png",
+    "colorHex": "#88817d",
+    "hue": 18,
+    "saturation": 4,
+    "lightness": 51
+  },
+  {
+    "id": "04",
+    "name": "Castaño Chocolate Intenso",
+    "code": "#04",
+    "image": "/products/04.png",
+    "colorHex": "#99908b",
+    "hue": 21,
+    "saturation": 6,
+    "lightness": 57
+  },
+  {
+    "id": "05",
+    "name": "Castaño Medio (Castaño caramelo)",
+    "code": "#05",
+    "image": "/products/05.png",
+    "colorHex": "#978c85",
+    "hue": 22,
+    "saturation": 7,
+    "lightness": 55
+  },
+  {
+    "id": "06",
+    "name": "Castaño (Castaño Avellana)",
+    "code": "#06",
+    "image": "/products/06.png",
+    "colorHex": "#a89688",
+    "hue": 25,
+    "saturation": 15,
+    "lightness": 59
+  },
+  {
+    "id": "08",
+    "name": "Castaño Claro Cenizo (Castaño Humo)",
+    "code": "#08",
+    "image": "/products/08.png",
+    "colorHex": "#a99f97",
+    "hue": 27,
+    "saturation": 9,
+    "lightness": 63
+  },
+  {
+    "id": "10",
+    "name": "Castaño Claro (Castaño Miel Suave)",
+    "code": "#10",
+    "image": "/products/10.png",
+    "colorHex": "#9a8e85",
+    "hue": 27,
+    "saturation": 9,
+    "lightness": 56
+  },
+  {
+    "id": "12",
+    "name": "Rubio Cenizo Oscuro",
+    "code": "#12",
+    "image": "/products/12.png",
+    "colorHex": "#b3a294",
+    "hue": 27,
+    "saturation": 17,
+    "lightness": 64
+  },
+  {
+    "id": "14",
+    "name": "Castaño Claro Dorado",
+    "code": "#14",
+    "image": "/products/14.png",
+    "colorHex": "#a79487",
+    "hue": 24,
+    "saturation": 15,
+    "lightness": 59
+  },
+  {
+    "id": "16",
+    "name": "Rubio Oscuro",
+    "code": "#16",
+    "image": "/products/16.png",
+    "colorHex": "#bba99a",
+    "hue": 27,
+    "saturation": 19,
+    "lightness": 67
+  },
+  {
+    "id": "27",
+    "name": "Rubio Oscuro Dorado",
+    "code": "#27",
+    "image": "/products/27.png",
+    "colorHex": "#bca897",
+    "hue": 27,
+    "saturation": 21,
+    "lightness": 66
+  },
+  {
+    "id": "33",
+    "name": "Rojo Cobrizo Intenso",
+    "code": "#33",
+    "image": "/products/33.png",
+    "colorHex": "#b2948a",
+    "hue": 15,
+    "saturation": 20,
+    "lightness": 62
+  },
+  {
+    "id": "35",
+    "name": "Rojo Cobrizo",
+    "code": "#35",
+    "image": "/products/35.png",
+    "colorHex": "#ae8b7d",
+    "hue": 17,
+    "saturation": 23,
+    "lightness": 58
+  },
+  {
+    "id": "37",
+    "name": "Rojo Caoba Oscuro",
+    "code": "#37",
+    "image": "/products/37.png",
+    "colorHex": "#887272",
+    "hue": 359,
+    "saturation": 8,
+    "lightness": 49
+  },
+  {
+    "id": "99J",
+    "name": "Rojo oscuro (Vino Burdeos)",
+    "code": "#99J",
+    "image": "/products/99J.png",
+    "colorHex": "#817272",
+    "hue": 359,
+    "saturation": 5,
+    "lightness": 47
+  },
+  {
+    "id": "2-613",
+    "name": "Castaño Claro Cenizo",
+    "code": "#2/613",
+    "image": "/products/2-613.png",
+    "colorHex": "#a49489",
+    "hue": 25,
+    "saturation": 12,
+    "lightness": 59
+  },
+  {
+    "id": "4-613",
+    "name": "Castaño Medio con Reflejos Rubio Platinado",
+    "code": "#4/613",
+    "image": "/products/4-613.png",
+    "colorHex": "#8b6f47",
+    "hue": 35,
+    "saturation": 31,
+    "lightness": 41
+  },
+  {
+    "id": "6-613",
+    "name": "Castaño con Reflejos Dorados Platinados",
+    "code": "#6/613",
+    "image": "/products/6-613.png",
+    "colorHex": "#baa490",
+    "hue": 29,
+    "saturation": 23,
+    "lightness": 64
+  },
+  {
+    "id": "27-613",
+    "name": "Rubio Oscuro Dorado con Reflejo Rubio Platinado",
+    "code": "#27/613",
+    "image": "/products/27-613.png",
+    "colorHex": "#b9a48e",
+    "hue": 30,
+    "saturation": 23,
+    "lightness": 64
+  }
+]
