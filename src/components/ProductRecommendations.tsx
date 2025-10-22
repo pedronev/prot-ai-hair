@@ -27,22 +27,22 @@ export default function ProductRecommendations({
         <h3 className="text-2xl font-bold">Tus Mejores Opciones</h3>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {matches.map((match, index) => (
           <motion.div
             key={match.product.id}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5 + index * 0.1 }}
+            transition={{ delay: 0.5 + index * 0.05 }}
           >
             <Card className="overflow-hidden hover:shadow-xl transition-shadow">
               {index === 0 && (
-                <div className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-white text-center py-2 font-bold">
+                <div className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-white text-center py-2 font-bold text-sm">
                   Mejor Coincidencia
                 </div>
               )}
 
-              <div className="relative h-64 bg-gray-100">
+              <div className="relative h-48 bg-gray-100">
                 <Image
                   src={match.product.image}
                   alt={match.product.name}
@@ -51,30 +51,48 @@ export default function ProductRecommendations({
                 />
               </div>
 
-              <div className="p-4 space-y-3">
+              <div className="p-3 space-y-2">
                 <div>
-                  <Badge variant="outline" className="mb-2">
+                  <Badge variant="outline" className="mb-1 text-xs">
                     {match.product.code}
                   </Badge>
-                  <h4 className="font-bold text-lg">{match.product.name}</h4>
+                  <h4 className="font-bold text-sm line-clamp-2">
+                    {match.product.name}
+                  </h4>
+                </div>
+
+                <div className="space-y-1 text-xs">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">
+                      H: {match.product.hue}°
+                    </span>
+                    <span className="text-muted-foreground">
+                      S: {match.product.saturation}%
+                    </span>
+                    <span className="text-muted-foreground">
+                      L: {match.product.lightness}%
+                    </span>
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <div
-                    className="w-8 h-8 rounded-full border-2"
+                    className="w-6 h-6 rounded-full border-2 shrink-0"
                     style={{ backgroundColor: match.product.colorHex }}
                   />
-                  <div className="flex-1">
-                    <div className="text-sm text-muted-foreground">
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs text-muted-foreground">
                       Compatibilidad
                     </div>
-                    <div className="font-bold text-green-600">
+                    <div className="font-bold text-green-600 text-sm">
                       {match.similarity.toFixed(0)}%
                     </div>
                   </div>
                 </div>
 
-                <Button className="w-full">Ver Producto</Button>
+                <Button className="w-full" size="sm">
+                  Ver Producto
+                </Button>
               </div>
             </Card>
           </motion.div>

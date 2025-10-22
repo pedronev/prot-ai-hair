@@ -29,19 +29,24 @@ export function findBestMatches(
     const satDiff = Math.abs(colorData.saturation - product.saturation);
     const lightDiff = Math.abs(colorData.lightness - product.lightness);
 
-    // Ajustar pesos: lightness es más importante para tonos rubios
-    const hueWeight = 0.3;
-    const satWeight = 0.2;
-    const lightWeight = 0.5; // Aumentado
+    // Para tonos claros/rubios la luminosidad es crítica
+    const isBlonde = colorData.lightness > 55;
+    const hueWeight = isBlonde ? 0.25 : 0.35;
+    const satWeight = isBlonde ? 0.15 : 0.25;
+    const lightWeight = isBlonde ? 0.6 : 0.4;
+
+    const normalizedHueDiff = hueDiff / 180;
+    const normalizedSatDiff = satDiff / 100;
+    const normalizedLightDiff = lightDiff / 100;
 
     const distance =
-      hueDiff * hueWeight + satDiff * satWeight + lightDiff * lightWeight;
+      normalizedHueDiff * hueWeight * 100 +
+      normalizedSatDiff * satWeight * 100 +
+      normalizedLightDiff * lightWeight * 100;
+
     const similarity = Math.max(0, 100 - distance);
 
-    return {
-      product: product as Product,
-      similarity,
-    };
+    return { product: product as Product, similarity };
   });
 
   return matches.sort((a, b) => b.similarity - a.similarity).slice(0, topN);

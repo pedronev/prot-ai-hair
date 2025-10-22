@@ -11,28 +11,65 @@ export async function analyzeImageColor(
   imageElement: HTMLImageElement
 ): Promise<ColorData> {
   const tensor = tf.browser.fromPixels(imageElement);
-  const resized = tf.image.resizeBilinear(tensor, [224, 224]);
+  const resized = tf.image.resizeBilinear(tensor, [500, 500]);
   const normalized = resized.div(255.0);
-
   const pixels = (await normalized.array()) as number[][][];
 
-  let totalR = 0,
-    totalG = 0,
-    totalB = 0;
-  let pixelCount = 0;
+  const height = pixels.length;
+  const width = pixels[0].length;
 
-  for (let i = 0; i < pixels.length; i++) {
-    for (let j = 0; j < pixels[i].length; j++) {
-      totalR += pixels[i][j][0];
-      totalG += pixels[i][j][1];
-      totalB += pixels[i][j][2];
-      pixelCount++;
+  // Analizar solo el tercio medio vertical donde está el cabello principal
+  const hairRows = {
+    start: Math.floor(height * 0.25),
+    end: Math.floor(height * 0.55),
+  };
+  const hairCols = {
+    start: Math.floor(width * 0.25),
+    end: Math.floor(width * 0.75),
+  };
+
+  const hairPixels: number[][] = [];
+
+  for (let i = hairRows.start; i < hairRows.end; i++) {
+    for (let j = hairCols.start; j < hairCols.end; j++) {
+      const [r, g, b] = pixels[i][j];
+
+      const brightness = (r + g + b) / 3;
+      const max = Math.max(r, g, b);
+      const min = Math.min(r, g, b);
+      const saturation = max - min;
+
+      // Excluir fondos muy claros
+      if (brightness > 0.9 && saturation < 0.1) continue;
+
+      // Excluir ropa oscura (negro/azul marino)
+      if (brightness < 0.2) continue;
+
+      // Excluir piel clara
+      const isLightSkin =
+        brightness > 0.65 && r > g && g > b && saturation < 0.2;
+      if (isLightSkin) continue;
+
+      hairPixels.push([r, g, b]);
     }
   }
 
-  const avgR = totalR / pixelCount;
-  const avgG = totalG / pixelCount;
-  const avgB = totalB / pixelCount;
+  if (hairPixels.length < 50) {
+    throw new Error("No se pudo detectar el cabello");
+  }
+
+  // Ordenar por brillo y tomar el rango medio (evitar sombras y brillos)
+  const sorted = hairPixels
+    .map((p) => ({ rgb: p, brightness: (p[0] + p[1] + p[2]) / 3 }))
+    .sort((a, b) => a.brightness - b.brightness);
+
+  const start = Math.floor(sorted.length * 0.3);
+  const end = Math.floor(sorted.length * 0.7);
+  const corePixels = sorted.slice(start, end).map((p) => p.rgb);
+
+  const avgR = corePixels.reduce((sum, p) => sum + p[0], 0) / corePixels.length;
+  const avgG = corePixels.reduce((sum, p) => sum + p[1], 0) / corePixels.length;
+  const avgB = corePixels.reduce((sum, p) => sum + p[2], 0) / corePixels.length;
 
   const hsl = rgbToHsl(avgR, avgG, avgB);
 
@@ -49,10 +86,6 @@ export async function analyzeImageColor(
 }
 
 function rgbToHsl(r: number, g: number, b: number) {
-  r /= 255;
-  g /= 255;
-  b /= 255;
-
   const max = Math.max(r, g, b);
   const min = Math.min(r, g, b);
   let h = 0,

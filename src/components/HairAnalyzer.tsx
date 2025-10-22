@@ -24,7 +24,7 @@ export default function HairAnalyzer() {
 
     try {
       const color = await analyzeImageColor(image);
-      const bestMatches = findBestMatches(color, 3);
+      const bestMatches = findBestMatches(color, 22); // Todas las fotos
 
       setColorData(color);
       setMatches(bestMatches);
