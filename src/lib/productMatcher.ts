@@ -29,10 +29,24 @@ export function findBestMatches(
     const satDiff = Math.abs(colorData.saturation - product.saturation);
     const lightDiff = Math.abs(colorData.lightness - product.lightness);
 
-    const isBlonde = colorData.lightness > 65;
-    const hueWeight = isBlonde ? 0.15 : 0.35; // Menos peso al tono
-    const satWeight = isBlonde ? 0.25 : 0.25;
-    const lightWeight = isBlonde ? 0.6 : 0.4;
+    const isDark = colorData.lightness < 35;
+    const isReddish = product.hue >= 0 && product.hue <= 20;
+
+    let hueWeight = 0.35;
+    let satWeight = 0.25;
+    let lightWeight = 0.4;
+
+    if (isDark) {
+      lightWeight = 0.5;
+      hueWeight = 0.25;
+      satWeight = 0.25;
+    }
+
+    if (isReddish && colorData.saturation < 30) {
+      satWeight = 0.4;
+      hueWeight = 0.4;
+      lightWeight = 0.2;
+    }
 
     const normalizedHueDiff = hueDiff / 180;
     const normalizedSatDiff = satDiff / 100;

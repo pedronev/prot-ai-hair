@@ -120,6 +120,7 @@ export default function ImageCapture({ onImageCapture }: ImageCaptureProps) {
               ref={fileInputRef}
               type="file"
               accept="image/*"
+              capture="environment"
               className="hidden"
               onChange={handleFileUpload}
             />
