@@ -22,30 +22,42 @@ export function findBestMatches(
   topN: number = 3
 ): MatchResult[] {
   const matches = products.map((product) => {
-    const hueDiff = Math.min(
+    let hueDiff = Math.min(
       Math.abs(colorData.hue - product.hue),
       360 - Math.abs(colorData.hue - product.hue)
     );
     const satDiff = Math.abs(colorData.saturation - product.saturation);
     const lightDiff = Math.abs(colorData.lightness - product.lightness);
 
-    const isDark = colorData.lightness < 35;
-    const isReddish = product.hue >= 0 && product.hue <= 20;
+    const isVeryDark = colorData.lightness < 30;
+    const isDark = colorData.lightness < 40;
+    const productIsRed =
+      product.hue >= 0 && product.hue <= 25 && product.saturation > 40;
 
-    let hueWeight = 0.35;
-    let satWeight = 0.25;
+    let hueWeight = 0.3;
+    let satWeight = 0.3;
     let lightWeight = 0.4;
 
-    if (isDark) {
+    if (isVeryDark) {
+      lightWeight = 0.6;
+      hueWeight = 0.15;
+      satWeight = 0.25;
+
+      if (productIsRed && colorData.saturation < 20) {
+        return { product: product as Product, similarity: 0 };
+      }
+    } else if (isDark) {
       lightWeight = 0.5;
       hueWeight = 0.25;
       satWeight = 0.25;
+
+      if (productIsRed && colorData.saturation < 25) {
+        hueDiff *= 2;
+      }
     }
 
-    if (isReddish && colorData.saturation < 30) {
-      satWeight = 0.4;
-      hueWeight = 0.4;
-      lightWeight = 0.2;
+    if (productIsRed && colorData.hue > 30 && colorData.saturation < 30) {
+      return { product: product as Product, similarity: 0 };
     }
 
     const normalizedHueDiff = hueDiff / 180;
@@ -62,5 +74,8 @@ export function findBestMatches(
     return { product: product as Product, similarity };
   });
 
-  return matches.sort((a, b) => b.similarity - a.similarity).slice(0, topN);
+  return matches
+    .filter((m) => m.similarity > 0)
+    .sort((a, b) => b.similarity - a.similarity)
+    .slice(0, topN);
 }

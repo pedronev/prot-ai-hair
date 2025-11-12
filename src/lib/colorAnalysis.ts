@@ -18,10 +18,9 @@ export async function analyzeImageColor(
   const height = pixels.length;
   const width = pixels[0].length;
 
-  // Analizar solo el tercio medio vertical donde está el cabello principal
   const hairRows = {
-    start: Math.floor(height * 0.25),
-    end: Math.floor(height * 0.55),
+    start: Math.floor(height * 0.2),
+    end: Math.floor(height * 0.6),
   };
   const hairCols = {
     start: Math.floor(width * 0.25),
@@ -39,15 +38,11 @@ export async function analyzeImageColor(
       const min = Math.min(r, g, b);
       const saturation = max - min;
 
-      // Excluir fondos muy claros
-      if (brightness > 0.9 && saturation < 0.1) continue;
+      if (brightness > 0.85 && saturation < 0.15) continue;
+      if (brightness < 0.15) continue;
 
-      // Excluir ropa oscura (negro/azul marino)
-      if (brightness < 0.2) continue;
-
-      // Excluir piel clara
       const isLightSkin =
-        brightness > 0.65 && r > g && g > b && saturation < 0.2;
+        brightness > 0.6 && r > g && g > b && saturation < 0.25;
       if (isLightSkin) continue;
 
       hairPixels.push([r, g, b]);
@@ -58,13 +53,12 @@ export async function analyzeImageColor(
     throw new Error("No se pudo detectar el cabello");
   }
 
-  // Ordenar por brillo y tomar el rango medio (evitar sombras y brillos)
   const sorted = hairPixels
     .map((p) => ({ rgb: p, brightness: (p[0] + p[1] + p[2]) / 3 }))
     .sort((a, b) => a.brightness - b.brightness);
 
-  const start = Math.floor(sorted.length * 0.3);
-  const end = Math.floor(sorted.length * 0.7);
+  const start = Math.floor(sorted.length * 0.25);
+  const end = Math.floor(sorted.length * 0.75);
   const corePixels = sorted.slice(start, end).map((p) => p.rgb);
 
   const avgR = corePixels.reduce((sum, p) => sum + p[0], 0) / corePixels.length;

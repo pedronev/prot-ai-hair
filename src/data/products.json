@@ -174,10 +174,10 @@
     "name": "Rojo oscuro (Vino Burdeos)",
     "code": "#99J",
     "image": "/products/99J.jpg",
-    "colorHex": "#8f7b5e",
-    "hue": 36,
-    "saturation": 21,
-    "lightness": 46
+    "colorHex": "#4a1a1a",
+    "hue": 0,
+    "saturation": 48,
+    "lightness": 20
   },
   {
     "id": "2-613",
