@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Camera, Upload, X } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Card } from "../components/ui/card";
@@ -34,15 +34,28 @@ export default function ImageCapture({ onImageCapture }: ImageCaptureProps) {
 
   const startCamera = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "environment" },
+      });
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
+        await videoRef.current.play();
         setIsCamera(true);
       }
     } catch (error) {
       console.error("Error accessing camera:", error);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (videoRef.current?.srcObject) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        const stream = videoRef.current.srcObject as MediaStream;
+        stream.getTracks().forEach((track) => track.stop());
+      }
+    };
+  }, []);
 
   const capturePhoto = () => {
     if (!videoRef.current) return;

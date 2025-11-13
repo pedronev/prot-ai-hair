@@ -31,19 +31,26 @@ export function findBestMatches(
 
     const isVeryDark = colorData.lightness < 30;
     const isDark = colorData.lightness < 40;
+    const isReddish =
+      (colorData.hue >= 340 || colorData.hue <= 25) &&
+      colorData.saturation > 15;
     const productIsRed =
-      product.hue >= 0 && product.hue <= 25 && product.saturation > 40;
+      (product.hue >= 340 || product.hue <= 25) && product.saturation > 30;
 
     let hueWeight = 0.3;
     let satWeight = 0.3;
     let lightWeight = 0.4;
 
-    if (isVeryDark) {
+    if (isReddish && productIsRed) {
+      hueWeight = 0.35;
+      satWeight = 0.35;
+      lightWeight = 0.3;
+    } else if (isVeryDark) {
       lightWeight = 0.6;
       hueWeight = 0.15;
       satWeight = 0.25;
 
-      if (productIsRed && colorData.saturation < 20) {
+      if (productIsRed && !isReddish) {
         return { product: product as Product, similarity: 0 };
       }
     } else if (isDark) {
@@ -51,12 +58,12 @@ export function findBestMatches(
       hueWeight = 0.25;
       satWeight = 0.25;
 
-      if (productIsRed && colorData.saturation < 25) {
-        hueDiff *= 2;
+      if (productIsRed && !isReddish) {
+        hueDiff *= 2.5;
       }
     }
 
-    if (productIsRed && colorData.hue > 30 && colorData.saturation < 30) {
+    if (!isReddish && productIsRed && colorData.saturation < 20) {
       return { product: product as Product, similarity: 0 };
     }
 
